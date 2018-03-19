@@ -1,3 +1,3 @@
 class User < ApplicationRecord
-  has_many :families
+  belongs_to :family
 end
