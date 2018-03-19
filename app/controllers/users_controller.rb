@@ -25,7 +25,6 @@ class UsersController < ApplicationController
     else
       render json: {status: 400, message: 'email missing'}
     end
-
   end
 
   private
