@@ -2,34 +2,41 @@
 
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
-  # before_action :configure_account_update_params, only: [:update]
+  before_action :configure_account_update_params, only: [:update]
 
-  # GET /resource/sign_up
+  # GET /users/sign_up
   def new
-    super
+    u = User.new
+    u.email = params[:email]
+    u.password = params[:password]
+    if u.save!
+      render status: 201
+    else
+      render status: 400
+    end
   end
 
-  # POST /resource
+  # POST /users
   def create
     super
   end
 
-  # GET /resource/edit
+  # GET /users/edit
   def edit
     super
   end
 
-  # PUT /resource
+  # PUT /users
   def update
     super
   end
 
-  # DELETE /resource
+  # DELETE /users
   def destroy
     super
   end
 
-  # GET /resource/cancel
+  # GET /users/cancel
   # Forces the session data which is usually expired after sign
   # in to be expired now. This is useful if the user wants to
   # cancel oauth signing in/up in the middle of the process,
@@ -42,21 +49,21 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_account_update_params
-  #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
-  # end
+  def configure_account_update_params
+    devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
+  end
 
   # The path used after sign up.
-  # def after_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  def after_sign_up_path_for(users)
+    super(users)
+  end
 
   # The path used after sign up for inactive accounts.
-  # def after_inactive_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  def after_inactive_sign_up_path_for(users)
+    super(users)
+  end
 end
