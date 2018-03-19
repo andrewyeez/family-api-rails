@@ -18,6 +18,14 @@ class UsersController < ApplicationController
 
   def update
     u = User.find(params[:id])
+    if u && params[:email]
+      u.email = params[:email]
+      u.save!
+      render json: User.find(params[:id]), status: 200
+    else
+      render json: {status: 400, message: 'email missing'}
+    end
+
   end
 
   private
