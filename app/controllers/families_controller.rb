@@ -13,9 +13,7 @@ class FamiliesController < ApplicationController
 
   def update
     @family = Family.find(params[:id])
-    if @family.update_attributes(family_params)
-      render json: @family, status: 200
-    end
+    render json: @family, status: 200 if @family.update_attributes(family_params)
   end
 
   private
