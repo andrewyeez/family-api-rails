@@ -8,7 +8,7 @@ class FamiliesController < ApplicationController
 
   def show
     @family = Family.find(params[:id])
-    render json: @family, status: 200
+    render json: @family, status: 302
   end
 
   def update
